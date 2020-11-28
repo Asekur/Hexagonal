@@ -2,15 +2,15 @@
 #include "Hexagon.h"
 #include "Point.h"
 #include <vector>
-#include <list>
 #include <Windows.h>
+#include <iostream>
 
 #define AMOUNT_EDGE 6
 #define M_PI 3.141592653589
 
 class HexagonList
 {
-	std::list<Hexagon> listHex;
+	std::vector<Hexagon> listHex;
 
 	Hexagon hexCorner(Point center, float size) {
 		Point p1 = Point(center.GetX() - cos((60 * M_PI) / 180) * size, center.GetY() - sin((60 * M_PI) / 180) * size);
@@ -20,7 +20,7 @@ class HexagonList
 		Point p5 = Point(center.GetX() - cos((60 * M_PI) / 180) * size, center.GetY() + sin((60 * M_PI) / 180) * size);
 		Point p6 = Point(center.GetX() - size, center.GetY());
 
-		return Hexagon(p1, p2, p3, p4, p5, p6, -1);
+		return Hexagon(p1, p2, p3, p4, p5, p6, center, -1);
 	}
 
 	std::vector<Point> shiftPointList = { Point(+1, +0.5), Point(+1, -0.5), Point(0, -1),
@@ -32,8 +32,27 @@ class HexagonList
 											   Point(-3, +0.5), Point(-3, -0.5), Point(+3, -0.5), Point(+3, +0.5) };
 
 public:
+	//раскраска
+	void drawHex(Hexagon& hex, HDC hdc, int color) {
+		//красный 0
+		HBRUSH hBrush = NULL;
+		if (color == 0) {
+			hBrush = CreateSolidBrush(RGB(255, 0, 0));
+			hex.SetMaster(0);
+		}
+		//зеленый 1
+		if (color == 1) {
+			hBrush = CreateSolidBrush(RGB(0, 255, 0));
+			hex.SetMaster(1);
+		}
+		SelectObject(hdc, hBrush);
+		FloodFill(hdc, hex.GetCenter().GetX(), hex.GetCenter().GetY(), RGB(0, 0, 0));
+	}
+
 	//отрисовка хексагончиков
-	void drawListOfHexagons(std::list<Hexagon> list, HDC hdc) {
+	void drawListOfHexagons(std::vector<Hexagon> list, HDC hdc) {
+		HPEN hPen = CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
+		SelectObject(hdc, hPen);
 		for (Hexagon hex : list)
 		{
 			MoveToEx(hdc, hex.GetFirst().GetX(), hex.GetFirst().GetY(), NULL);
@@ -47,8 +66,8 @@ public:
 	}
 
 	//создание списка
-	std::list<Hexagon> createList(Point center, int size) {
-		std::list<Hexagon> newList;
+	std::vector<Hexagon> createList(Point center, int size) {
+		std::vector<Hexagon> newList;
 		int newShiftX, newShiftY;
 		int shift;
 
@@ -90,6 +109,29 @@ public:
 	}
 
 	//определить в каком хексагончике находится точка
-
+	int hexagonIn (Point point, std::vector<Hexagon> &list, int color) {
+		bool isIn = false;
+		int i, j;
+		int iterator = -1;
+		for (Hexagon hex : list) {
+			//массив точек из хексагона
+			iterator++;
+			std::vector<Point> arrP = hex.GetArrayPoints();
+			for (i = 0, j = arrP.size() - 1; i < arrP.size(); j = i++)
+			{
+				if ((arrP[i].GetY() < point.GetY() && point.GetY() <= arrP[j].GetY() || 
+					arrP[j].GetY() < point.GetY() && point.GetY() <= arrP[i].GetY())
+					&& (point.GetX() > (arrP[j].GetX() - arrP[i].GetX()) * (point.GetY() - arrP[i].GetY()) /
+					(arrP[j].GetY() - arrP[i].GetY()) + arrP[i].GetX())) {
+					isIn = !isIn;
+				}
+			}
+			if (isIn) {
+				list[iterator] = hex;
+				return iterator;
+			}
+		}
+		return -1;
+	}
 };
 
