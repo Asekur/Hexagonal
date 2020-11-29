@@ -133,5 +133,18 @@ public:
 		}
 		return -1;
 	}
+
+	std::pair<int,int> valueNonFreeHexagons(std::vector<Hexagon> list) {
+		int amountRed = 0, amountGreen = 0;
+		for (Hexagon hex : list) {
+			if (hex.GetMaster() == 0) {
+				amountRed++;
+			}
+			if (hex.GetMaster() == 1) {
+				amountGreen++;
+			}
+		}
+		return std::pair<int, int>(amountRed,amountGreen);
+	}
 };
 

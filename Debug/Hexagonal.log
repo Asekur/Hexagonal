@@ -40,7 +40,9 @@ D:\Для учебы\Курсач\Hexagonal\HexagonList.h(104,39): warning C4244
 D:\Для учебы\Курсач\Hexagonal\HexagonList.h(104,28): warning C4244:  аргумент: преобразование "int" в "float", возможна потеря данных
 D:\Для учебы\Курсач\Hexagonal\HexagonList.h(105,43): warning C4244:  аргумент: преобразование "int" в "float", возможна потеря данных
 D:\Для учебы\Курсач\Hexagonal\HexagonList.h(120,39): warning C4018:  <: несоответствие типов со знаком и без знака
-D:\Для учебы\Курсач\Hexagonal\main.cpp(33,39): warning C4244:  аргумент: преобразование "float" в "int", возможна потеря данных
-D:\Для учебы\Курсач\Hexagonal\main.cpp(84,25): warning C4244:  аргумент: преобразование "int" в "float", возможна потеря данных
-D:\Для учебы\Курсач\Hexagonal\main.cpp(84,22): warning C4244:  аргумент: преобразование "int" в "float", возможна потеря данных
+D:\Для учебы\Курсач\Hexagonal\main.cpp(35,20): warning C4018:  <: несоответствие типов со знаком и без знака
+D:\Для учебы\Курсач\Hexagonal\main.cpp(44,20): warning C4018:  <: несоответствие типов со знаком и без знака
+D:\Для учебы\Курсач\Hexagonal\main.cpp(58,39): warning C4244:  аргумент: преобразование "float" в "int", возможна потеря данных
+D:\Для учебы\Курсач\Hexagonal\main.cpp(224,25): warning C4244:  аргумент: преобразование "int" в "float", возможна потеря данных
+D:\Для учебы\Курсач\Hexagonal\main.cpp(224,22): warning C4244:  аргумент: преобразование "int" в "float", возможна потеря данных
   Hexagonal.vcxproj -> D:\Для учебы\Курсач\Hexagonal\Debug\Hexagonal.exe
